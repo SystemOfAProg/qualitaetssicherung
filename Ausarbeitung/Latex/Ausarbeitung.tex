@@ -1,0 +1,61 @@
+\documentclass{article}
+    % General document formatting
+    \usepackage[margin=0.7in]{geometry}
+    \usepackage[parfill]{parskip}
+    \usepackage[utf8]{inputenc}
+    
+    % Related to math
+    \usepackage{amsmath,amssymb,amsfonts,amsthm}
+    
+    % Document configuration
+    \linespread{1.3}
+
+\begin{document}
+
+Hoffmann \& Sorn, 19.04.2019, Blockseminar Qualitätssicherung: Circle CI
+
+\section {Was ist Circle CI?}
+
+Circle CI ist eine Plattform für kontinuierliche Integration, die sowohl als gehostet als Software as a Service oder selbst gehostet verwendet werden kann. Circle CI unterstützt dabei eine große Auswahl an gängigen Sprachen und Umgebungen mit Beispielprojekten mit ausführlicher Dokumentation, an denen sich der Einsatz des Tools auch für CI-Anfänger einfach erlernen lässt.
+
+\subsection {Was ist Kontinuierliche Integration?}
+
+Die Idee hinter Kontinuierliche Integration ist, die einzelnen Komponenten einer Software während derer Entwicklung immer wieder zu einer Einheit zusammenzufügen. Üblicherweise beinhaltet dieser Vorgang nicht nur das Bauen des gesamten Codes, sondern auch das Ausführen von Tests, die sicherstellen sollen, dass sich durch die neu hinzugekommenen Änderungen keine Fehler in den Code eingeschlichen haben. Das Ziel dieses kontinuierlichen Bauens und Testens ist, die Qualität der entwickelten Software zu erhöhen, indem man auftretende Fehler frühzeitig bemerkt und verbessert.
+
+Um ein eigenes Projekt kontinuierlich integrieren zu können, müssen ein paar Grundvoraussetzungen erfüllt sein. Der erste wichtige Schritt ist eine gemeinsame Codebasis, an der ein oder mehrere Entwickler arbeiten können. Eine Möglichkeit dafür sind Versionsverwaltung wie GIT oder SVN, in die alle Entwickler ihre Änderungen am Code einpflegen können. Eine weitere Voraussetzung ist die Möglichkeit, den Code automatisch bauen zu lassen. Für die meisten Sprachen gibt es hierfür Build-Tools, in denen die einzelnen Schritte des Übersetzen beschrieben werden können, um diese später automatisiert auszuführen. Beispiele wären hierfür Make oder CMake für C und C++ Projekte oder Maven für Java Projekte. Diese übernehmen nicht nur das übersetzen des eigenen Codes, sondern auch das Anbinden an bereits bestehende Projekte, die als Abhängigkeiten definiert werden. Ziel hierbei ist es am Ende, die gesamte Software im besten Fall durch einen Befehl bauen zu können, ohne dass weitere Schritte von Hand notwendig sind.
+Eine weitere wichtige Voraussetzung ist es, Tests zu schreiben, mit denen sichergestellt werden kann, dass die Änderungen richtig funktionieren und nicht in bestehendem Code zu Fehlern führt. Hier können Tools wie SonarQube verwendet werden, die automatisch prüfen, welcher Anteil des Codes durch Tests bereits abgedeckt sind. Nach erfolgreicher Integration kann beispielsweise das Überspielen der Software in eine Produktivumgebung erfolgen. Hierbei wird dann von Continous Devlivery, also kontinuierlichen Auslieferung der Software gesprochen.
+
+Auch wenn Kontinuierliche Integration gerade am Anfang mit zusätzlichem Aufwand verbunden ist, gibt es auf lange Sicht doch viele Vorteile, die den Einsatz in den meisten Softwareprojekten sinnvoll machen.
+Tauchen bei der Entwicklung Fehler auf, so können diese schnell und zeitnah behoben werden.
+Zudem ermöglicht es kontinuierliche Integration, immer eine sehr aktuelle Version der Software für Demonstrationen für beispielsweise Vertriebszwecke zur Verfügung zu haben. Zudem wird durch kürzere Integrationszyklen auch der Aufwand der einzelnen Integrationen der Neuerungen in den Produktionscode deutlich verringert.
+Die Gefahr das neu entwickelte Komponenten nur schwer in die bestehende Code Basis integriert werden können, wird dadurch minimiert.
+
+\subsection{Welche Features bietet Circle CI für Entwickler?}
+CircleCI bietet eine Reihe von interessanten Features für Entwickler. Hier eine kurze Zusammenfassung:
+
+\begin{description}
+\item[SSH Verbindung zu Build Slave] Über eine Interactive Login Shell können fehlgeschlagene Tasks leicht untersucht werden
+\item[Paralleles Testen auf mehreren Maschinen] Eine größere Menge an Tests können auf mehrere Maschinen verteilt werden
+\item[Konfigurierbare Zuweisung von Ressourcen] Die Belastung für CPU und RAM pro Job können konfiguriert werden
+\item[Caching von Daten]Die Laufzeit von Tests kann durch das Cachen von Daten verbessert werden
+\item[Circle CI Workflows] Über Workflows können verschiedene Aufgaben koordiniert werden
+\end{description}
+
+\subsection{Welche Features bietet Circle CI für Betreiber der Software?}
+Auch für die Betreiber der eigenen Software hält Circle CI eine Reihe interessanter Features bereit.
+
+\begin{description}
+\item[Monitoring] Einfache Überwachung der installierten Umgebung
+\item[Nomad Cluster] Nomad als Framework für die Orchestrierung der Container Umgebungen
+\item[Rest APIs]Alle Funktionen können über eine Rest Schnittstelle angestoßen werden
+\item[Einfache Fehlersuche für eigene Installationen] Einfache Fehlersuche bei Installationen von Circle CI auf eigenen Servern
+\item[Einfache Übersicht] Dashboard mit der Übersicht die einzelnen Repositories und deren Ergebnisse
+\end{description}
+
+\section{Einführung in die Verwendung von Circle CI}
+Platzhalter
+
+\section {Vergleich zu anderen Tools und Anbieter}
+Platzhalter
+
+\end{document}
