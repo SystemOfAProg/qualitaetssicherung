@@ -1,0 +1,2 @@
+from test.PasswordManagerTest import PasswordManagerTest
+from test.PasswordManagerUserTest import PasswordManagerTest2

@@ -1,0 +1,1 @@
+from passwordmanager.PasswordManager import PasswordManager
