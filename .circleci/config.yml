@@ -1,11 +1,17 @@
 version: 2.1
 
+jobs:
+  run_python_tests:
+    docker: # use the docker executor type; machine and macos executors are also supported
+      - image: circleci/python:latest # the primary container, where your job's commands are run
+    steps:
+      - checkout # check out the code in the project directory
+      - run:
+          name: Run Tests 
+          command: 'python3 example_project/test.py'
+
 workflows:
-    "Hello Workflow":
-        jobs:
-          build:
-            docker: # use the docker executor type; machine and macos executors are also supported
-              - image: circleci/python@3.6.7-stretch # the primary container, where your job's commands are run
-            steps:
-              - checkout # check out the code in the project directory
-              - run: cd ./example_project && python3 test.py # run the `echo` command
+  version: 2.1
+  build_and_test:
+    jobs:
+      - run_python_tests
