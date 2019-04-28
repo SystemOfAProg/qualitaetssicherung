@@ -1,4 +1,4 @@
-\documentclass{article}
+\documentclass[11pt]{article}
     % General document formatting
     \usepackage[margin=0.7in]{geometry}
     \usepackage[parfill]{parskip}
@@ -31,14 +31,40 @@ Zudem ermöglicht es kontinuierliche Integration, immer eine sehr aktuelle Versi
 Die Gefahr das neu entwickelte Komponenten nur schwer in die bestehende Code Basis integriert werden können, wird dadurch minimiert.
 
 \section{Einführung in die Verwendung von Circle CI}
-Der wichtigste Punkt an einem neuen Tool für uns als Entwickler ist es, dass wir es effektiv und effizient einsetzten können. In unserem Fall stellt sich damit die Frage, wie wir ein neues oder bereits bestehendes Projekt kontinuierlich integrieren können. Hierbei sehen wir uns zuerst die bereits gehostete Version von Circle CI an, da diese uns gerade am Anfang administrativen Aufwand erspart. Für die Integration des eigenen Projekts in Circle CI macht es im Grunde genommen keinen Unterschied, ob Code für das Projekt bereits geschrieben wurde, oder ob man mit einem neuen Projekt beginnt, in dem es weder Code noch Tests gibt. Das Projekt benötigt lediglich eine Datei config.yml in einem Ordner .circleci, den man in das Root Verzeichnis des Porjektes ablegt, das in Circle CI gebaut werden soll. Diese Datei in Verbindung mit der Autorisierung des Repositories genügen, um das Projekt von Circle CI bauen und testen zu können. Auf die genaue Konfiguration, die in der YAML Datei hinterlegt wird, gehen wir später etwas genauer anhand eines praktische Beispiels ein.
+Der wichtigste Punkt an einem neuen Tool für uns als Entwickler ist es, dass wir es effektiv und effizient einsetzten können. In unserem Fall stellt sich damit die Frage, wie wir ein neues oder bereits bestehendes Projekt kontinuierlich integrieren können. Hierbei sehen wir uns zuerst die SaaS Version von Circle CI an, da diese uns gerade am Anfang administrativen Aufwand erspart. Für die Integration des eigenen Projekts in Circle CI macht es im Grunde genommen keinen Unterschied, ob Code für das Projekt bereits geschrieben wurde, oder ob man mit einem neuen Projekt beginnt, in dem es weder Code noch Tests gibt. Das Projekt benötigt lediglich eine Datei config.yml in einem Ordner .circleci, den man in das Root Verzeichnis des Projektes ablegt, das in Circle CI gebaut werden soll. Diese Datei in Verbindung mit der Autorisierung des Repositories genügen, um das Projekt von Circle CI bauen und testen zu können. Auf die genaue Konfiguration, die in der YAML Datei hinterlegt wird, gehen wir später etwas genauer anhand eines praktische Beispiels ein.
 
 Über die Weboberfläche von Circle CI kann dann ausgewählt werden, welche der eigenen Projekte kontinuierlich gebaut werden sollen. Wird CircleCI beispielsweise in Verbindung mit GitHub betrieben, werden alle verfügbaren Projekte bereits in Dieser aufgelistet. Die Projekte, die gebaut werden sollen, müssen dann nur noch ausgewählt werden. Der Aufwand, eigene Projekte mit Circle CI kontinuierlich zu integrieren, ist damit minimal. 
 
 \subsection{Funktionsweise von Circle CI}
-Circle CI testet die eigenen Projekte in jeweils eigenen Containern oder Virtuellen Maschinen, die auf die Bedürfnisse der Projekte angepasst sind. Neben Linux basierten Containern und VMs können allerdings auch 
+Circle CI testet die eigenen Projekte in jeweils eigenen Containern oder Virtuellen Maschinen, die auf die Bedürfnisse der Projekte angepasst sind. Neben Linux basierten Containern und VMs können allerdings auch macOS basierte "Single Use" VMs für das Testen von iOS und macOS Anwendungen verwendet werden.
+Damit stellt Circle CI sicher, dass mehrere Jobs sehr einfach parallel laufen können, ohne dass sich diese gegenseitig beeinflussen.
+
 
 \section {Vergleich zu anderen Tools und Anbieter}
-Platzhalter
+\subsection {Vergleich zum Open Source Automatisierungsserver Jenkins}
+Jenkins ist ein quelloffener Java basierter Automatisierungsserver, der sehr oft für kontinuierliche Integration und Auslieferung zum Einsatz kommt.
+Jenkins bietet selbst somit keine Software as a Service Lösung an, die private Anwender sofort nutzen können.
+Im Vergleich zu Circle CI bedeutet dies für den Nutzer allerdings gerade am Anfang einen erhöhten Aufwand für Administration und höhere Kosten, da eigene 
+Hardware bereitgestellt werden muss, auf der Jenkins installiert wird.
+Ein weiterer Unterschied zu Circle CI ist zudem, dass die Funktionalität von Jenkins stark von Plugins abhängig ist.
+Funktionalitäten wie das Auschecken von Git Repositories werden bei Jenkins durch Plugins realisiert.
+Auf der einen Seite erhöht dies die Flexibilität, auf der anderen Seite erhöht dies wiederum den administrativen Aufwand erhöht.
+Jenkins führt die zu automatisierenden Aufgaben in einem normalen Dateisystem Verzeichnis aus.
+Dabei gibt es von Haus aus keine Abschottung des Testcodes zum Host Betriebssystem, auf dem die Jenkins Instanz läuft.
+Werden nun mehrere Aufgaben gleichzeitig über Multithreading realisiert, so sind dieses nicht von einander strikt getrennt und können sich gegenseitig beeinflussen.
+Möchte man die Tests in getrennten Bereichen ausführen, so muss dies vom Nutzer selbst umgesetzt werden.
+Wie bereits beschrieben setzt CircleCI im Gegensatz dazu von Haus aus auf von einander abgeschottete Container oder Virtuelle Maschinen.
+Eine parallelisierte Ausführung von Aufgaben ist damit sehr einfach umzusetzen.
+
+Abschließend kommt es auf den Umfang des Projekts und die Kapazität von Entwicklern und Administratoren an, welche Lösung besser geeignet ist.
+Sind die Projekte kleiner, gibt es wenig Kapazität für administrative Aufgaben und soll das Projekt so schnell wie möglich in kontinuierlich integriert werden, lohnt sich Circle CI.
+Wachsen die Projekte jedoch im Umfang und Entwicklungszeit, so lohnt sich der administrative Aufwand und das Anschaffen neuer Hardwarekapazitäten für Jenkins.
+
+\subsection {Vergleich zu SaaS CI Lösung Travis}
+Travis CI ist im Gegensatz zu Jenkins genau wie Circle CI eine Cloud basierte CI Lösung. Die meisten der Vor- und Nachteile von Circle CI treffen somit auch auf Travis CI zu. Es existieren allerdings trotzdem einige kleinere Unterschiede zwischen den beiden CI Tools. Der erste Unterschied sind die Preise der beiden Tools. Travis CI ist lediglich für Open Source Projekte kostenlos verfügbar, während Circle CI auch für Geschäftskonten oder private Code Repositories bis zu bestimmten Grenzen kostenlos bleibt. Gerade für kleine Projekte mit geringer Build Zeit ist Circle CI daher besser geeignet, wenn der Code nicht öffentlich zugänglich ist. Für Open Source Projekte hingegen bietet Travis CI jedoch mehr Freiheiten. Ein weiterer Unterschied ist, das Travis CI auch Windows als Umgebung für Build anbietet. Ein Support für eine Windows Umgebung ist allerdings für die Zukunft geplant.
+Circle CI bietet allerdings im Vergleich zu Travis eine geringere Queueing Zeit für die eigenen Builds, sowie bessere Kontrolle über Hardware Ressourcen. Ein weiterer Vorteil von Circle CI ist, die breitere Skalierbarkeit für größere Software Projekte.
+Travis CI bietet auf der anderen Seite einen breiter gefächerten Support für mehr Sprachen, sowie Build Matrizen, die es erlauben, Tests in verschiedenen Sprach und Umgebungsversionen auszuführen.
+
+Eine einfache Wahl zwischen den beiden Plattformen ist hier nur unter Berücksichtigung vieler Details machbar. Eine einfache Empfehlung ist aufgrund ihrer Ähnlichkeit nur schwer zu geben.
 
 \end{document}
