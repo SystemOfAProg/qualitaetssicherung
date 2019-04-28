@@ -1,6 +1,12 @@
 version: 2.1
 
 jobs:
+  latex_document_build:
+    docker:
+     - image: koppor/texlive
+    steps:
+     - checkout
+     - run: pdflatex documentation/Latex/Ausarbeitung.tex
   run_python_tests:
     docker: # use the docker executor type; machine and macos executors are also supported
       - image: circleci/python:latest # the primary container, where your job's commands are run
@@ -14,4 +20,5 @@ workflows:
   version: 2.1
   build_and_test:
     jobs:
+      - latex_document_build
       - run_python_tests
