@@ -26,4 +26,3 @@
 Ideen für eine Live Demo:
 - Sehr einfaches Projekt ohne besondere Plattfrom wie Spring, Django ..., nur "eigener" Code
 - Vielleicht kleinere Abhängigkeiten als Demozwecke
--

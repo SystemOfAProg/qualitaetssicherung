@@ -30,30 +30,15 @@ Tauchen bei der Entwicklung Fehler auf, so können diese schnell und zeitnah beh
 Zudem ermöglicht es kontinuierliche Integration, immer eine sehr aktuelle Version der Software für Demonstrationen für beispielsweise Vertriebszwecke zur Verfügung zu haben. Zudem wird durch kürzere Integrationszyklen auch der Aufwand der einzelnen Integrationen der Neuerungen in den Produktionscode deutlich verringert.
 Die Gefahr das neu entwickelte Komponenten nur schwer in die bestehende Code Basis integriert werden können, wird dadurch minimiert.
 
-\subsection{Welche Features bietet Circle CI für Entwickler?}
-CircleCI bietet eine Reihe von interessanten Features für Entwickler. Hier eine kurze Zusammenfassung:
-
-\begin{description}
-\item[SSH Verbindung zu Build Slave] Über eine Interactive Login Shell können fehlgeschlagene Tasks leicht untersucht werden
-\item[Paralleles Testen auf mehreren Maschinen] Eine größere Menge an Tests können auf mehrere Maschinen verteilt werden
-\item[Konfigurierbare Zuweisung von Ressourcen] Die Belastung für CPU und RAM pro Job können konfiguriert werden
-\item[Caching von Daten]Die Laufzeit von Tests kann durch das Cachen von Daten verbessert werden
-\item[Circle CI Workflows] Über Workflows können verschiedene Aufgaben koordiniert werden
-\end{description}
-
-\subsection{Welche Features bietet Circle CI für Betreiber der Software?}
-Auch für die Betreiber der eigenen Software hält Circle CI eine Reihe interessanter Features bereit.
-
-\begin{description}
-\item[Monitoring] Einfache Überwachung der installierten Umgebung
-\item[Nomad Cluster] Nomad als Framework für die Orchestrierung der Container Umgebungen
-\item[Rest APIs]Alle Funktionen können über eine Rest Schnittstelle angestoßen werden
-\item[Einfache Fehlersuche für eigene Installationen] Einfache Fehlersuche bei Installationen von Circle CI auf eigenen Servern
-\item[Einfache Übersicht] Dashboard mit der Übersicht die einzelnen Repositories und deren Ergebnisse
-\end{description}
-
 \section{Einführung in die Verwendung von Circle CI}
-Der wichtigste Punkt an einem neuen Tool für uns als Entwickler ist es, dass wir es effektiv und effizient einsetzten können. In unserem Fall stellt sich damit die Frage, wie wir ein neues oder bereits bestehendes Projekt kontinuierlich integrieren können. Hierbei sehen wir uns zuerst die bereits gehostete Version von Circle CI an, da diese uns gerade am Anfang administrativen Aufwand erspart. Für die Integration des eigenen Projekts in Circle CI macht es im Grunde genommen keinen Unterschied, ob Code für das Projekt bereits geschrieben wurde, oder ob man mit einem neuen Projekt beginnt, in dem es weder Code noch Tests gibt. Das Projekt benötigt lediglich eine Datei config.yml in einem Ordner .circleci, den man in das Root Verzeichnis des Porjektes ablegt, das in Circle CI gebaut werden soll.
+Der wichtigste Punkt an einem neuen Tool für uns als Entwickler ist es, dass wir es effektiv und effizient einsetzten können. In unserem Fall stellt sich damit die Frage, wie wir ein neues oder bereits bestehendes Projekt kontinuierlich integrieren können. Hierbei sehen wir uns zuerst die bereits gehostete Version von Circle CI an, da diese uns gerade am Anfang administrativen Aufwand erspart. Für die Integration des eigenen Projekts in Circle CI macht es im Grunde genommen keinen Unterschied, ob Code für das Projekt bereits geschrieben wurde, oder ob man mit einem neuen Projekt beginnt, in dem es weder Code noch Tests gibt. Das Projekt benötigt lediglich eine Datei config.yml in einem Ordner .circleci, den man in das Root Verzeichnis des Porjektes ablegt, das in Circle CI gebaut werden soll. Diese Datei in Verbindung mit der Autorisierung des Repositories genügen, um das Projekt von Circle CI bauen und testen zu können. Auf die genaue Konfiguration, die in der YAML Datei hinterlegt wird, gehen wir später etwas genauer anhand eines praktische Beispiels ein.
+
+Über die Weboberfläche von Circle CI kann dann ausgewählt werden, welche der eigenen Projekte kontinuierlich gebaut werden sollen. Wird CircleCI beispielsweise in Verbindung mit GitHub betrieben, werden alle verfügbaren Projekte bereits in Dieser aufgelistet. Die Projekte, die gebaut werden sollen, müssen dann nur noch ausgewählt werden. Der Aufwand, eigene Projekte mit Circle CI kontinuierlich zu integrieren, ist damit minimal. 
+
+\subsection{Funktionsweise von Circle CI}
+Circle CI testet die eigenen Projekte in jeweils eigenen Containern oder Virtuellen Maschinen, die auf die Bedürfnisse der Projekte angepasst sind. Zuvor erläutern wir allerdings einige Grundkonzepte von Circle CI, die für spätere Kapitel wichtig sind.
+Orbs sind in Circle CI Konfigurationspakete, die in eigene Projekte importiert werden können.
+
 
 \section {Vergleich zu anderen Tools und Anbieter}
 Platzhalter
