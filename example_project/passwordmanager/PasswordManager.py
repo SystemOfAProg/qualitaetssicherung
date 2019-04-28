@@ -1,5 +1,6 @@
 import random, string
 
+# Generate passwords out of a master-password, a login- and a service-name
 class PasswordManager():
 
     def __init__(self, master_password: str, password_length: int = 16):

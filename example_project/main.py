@@ -10,7 +10,7 @@ def main():
     manager_user: PasswordManagerUser = PasswordManagerUser()
     password: str = manager.generate_password_for(login, service)
     print("Your Password is: " + password)
-    master_password: str = manager_user.read_master_from_pw(password)
+    master_password: str = manager_user.read_master_from_pw(password, manager.get_password_length())
     print("Master Password read from password: " + master_password)
 
 if __name__ == "__main__":
