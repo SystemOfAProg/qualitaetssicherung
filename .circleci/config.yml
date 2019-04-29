@@ -7,6 +7,13 @@ jobs:
     steps:
      - checkout
      - run: pdflatex documentation/Latex/Ausarbeitung.tex
+     - run:
+        name: Store Build Artifacts
+        command: |
+          mkdir /tmp/artifacts 
+          cp -R *.pdf /tmp/artifacts/
+     - store_artifacts:
+          path: /tmp/artifacts
   run_python_tests:
     docker: # use the docker executor type; machine and macos executors are also supported
       - image: circleci/python:latest # the primary container, where your job's commands are run
