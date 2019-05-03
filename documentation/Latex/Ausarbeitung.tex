@@ -3,6 +3,13 @@
     \usepackage[margin=0.7in]{geometry}
     \usepackage[parfill]{parskip}
     \usepackage[utf8]{inputenc}
+    \usepackage{listings}
+    \lstset{
+  		basicstyle=\ttfamily,
+  		columns=fullflexible,
+  		frame=single,
+  		breaklines=true,
+	}
     
     % Related to math
     \usepackage{amsmath,amssymb,amsfonts,amsthm}
@@ -16,29 +23,28 @@ Hoffmann \& Sorn, 19.04.2019, Blockseminar Qualitätssicherung: Circle CI
 
 \section {Was ist Circle CI?}
 
-Circle CI ist eine Plattform für kontinuierliche Integration, die sowohl als gehostet als Software as a Service oder selbst gehostet verwendet werden kann. Circle CI unterstützt dabei eine große Auswahl an gängigen Sprachen und Umgebungen mit Beispielprojekten mit ausführlicher Dokumentation, an denen sich der Einsatz des Tools auch für CI-Anfänger einfach erlernen lässt.
+Circle CI ist eine Plattform für kontinuierliche Integration, die sowohl als Software as a Service als auch zur Installation auf eigener Hardware angeboten wird. Circle CI unterstützt dabei eine große Auswahl an gängigen Sprachen und Umgebungen mit ausführlich dokumentierten Beispielprojekten, an denen sich der Einsatz des Tools auch für CI-Anfänger einfach erlernen lässt.
 
 \subsection {Was ist Kontinuierliche Integration?}
 
-Die Idee hinter Kontinuierliche Integration ist, die einzelnen Komponenten einer Software während derer Entwicklung immer wieder zu einer Einheit zusammenzufügen. Üblicherweise beinhaltet dieser Vorgang nicht nur das Bauen des gesamten Codes, sondern auch das Ausführen von Tests, die sicherstellen sollen, dass sich durch die neu hinzugekommenen Änderungen keine Fehler in den Code eingeschlichen haben. Das Ziel dieses kontinuierlichen Bauens und Testens ist, die Qualität der entwickelten Software zu erhöhen, indem man auftretende Fehler frühzeitig bemerkt und verbessert.
+Die Idee hinter Kontinuierliche Integration ist, die einzelnen Komponenten einer Software während derer Entwicklung immer wieder zu einer Einheit zusammenzufügen. Üblicherweise beinhaltet dieser Vorgang nicht nur das Bauen des gesamten Codes, sondern auch das Ausführen von Tests, die sicherstellen sollen, dass sich durch die neu hinzugekommenen Änderungen keine Fehler in den Code eingeschlichen haben. Das Ziel dieses kontinuierlichen Bauens und Testens ist, die Qualität der entwickelten Software zu erhöhen, indem man Fehler frühzeitig bemerkt und verbessert.
 
-Um ein eigenes Projekt kontinuierlich integrieren zu können, müssen ein paar Grundvoraussetzungen erfüllt sein. Der erste wichtige Schritt ist eine gemeinsame Codebasis, an der ein oder mehrere Entwickler arbeiten können. Eine Möglichkeit dafür sind Versionsverwaltung wie GIT oder SVN, in die alle Entwickler ihre Änderungen am Code einpflegen können. Eine weitere Voraussetzung ist die Möglichkeit, den Code automatisch bauen zu lassen. Für die meisten Sprachen gibt es hierfür Build-Tools, in denen die einzelnen Schritte des Übersetzen beschrieben werden können, um diese später automatisiert auszuführen. Beispiele wären hierfür Make oder CMake für C und C++ Projekte oder Maven für Java Projekte. Diese übernehmen nicht nur das übersetzen des eigenen Codes, sondern auch das Anbinden an bereits bestehende Projekte, die als Abhängigkeiten definiert werden. Ziel hierbei ist es am Ende, die gesamte Software im besten Fall durch einen Befehl bauen zu können, ohne dass weitere Schritte von Hand notwendig sind.
-Eine weitere wichtige Voraussetzung ist es, Tests zu schreiben, mit denen sichergestellt werden kann, dass die Änderungen richtig funktionieren und nicht in bestehendem Code zu Fehlern führt. Hier können Tools wie SonarQube verwendet werden, die automatisch prüfen, welcher Anteil des Codes durch Tests bereits abgedeckt sind. Nach erfolgreicher Integration kann beispielsweise das Überspielen der Software in eine Produktivumgebung erfolgen. Hierbei wird dann von Continous Devlivery, also kontinuierlichen Auslieferung der Software gesprochen.
+Um ein eigenes Projekt kontinuierlich integrieren zu können, müssen ein paar Grundvoraussetzungen erfüllt sein. Der erste wichtige Schritt ist eine gemeinsame Codebasis, an der ein oder mehrere Entwickler arbeiten können. Eine Möglichkeit dafür sind Versionsverwaltung wie GIT oder SVN, in die alle Entwickler ihre Änderungen am Code einpflegen können. Eine weitere Voraussetzung ist die Möglichkeit, den Code automatisch bauen zu lassen. Für die meisten Sprachen gibt es hierfür Build-Tools, in denen die einzelnen Schritte des Übersetzen beschrieben werden können, um diese später automatisiert auszuführen. Beispiele wären hierfür Make oder CMake für C und C++ Projekte oder Maven für Java Projekte. Diese übernehmen nicht nur das übersetzen des eigenen Codes, sondern auch das Anbinden bereits bestehender Projekte, die als Abhängigkeiten definiert werden. Ziel hierbei ist es am Ende, die gesamte Software im besten Fall durch einen Befehl bauen zu können, ohne dass weitere Schritte von Hand notwendig sind.
+Eine weitere wichtige Voraussetzung ist es, Tests zu schreiben, mit denen sichergestellt werden kann, dass die Änderungen richtig funktionieren und nicht in bestehendem Code zu Fehlern führt. Hier können Tools wie SonarQube verwendet werden, die automatisch prüfen, welcher Anteil des Codes durch Tests bereits abgedeckt sind. Eine Erweiterung dieses Konzeptes wäre die Kontinuierliche Auslieferung. Diese beschreibt die automatisierte Auslieferung der Software, wenn diese erfolgreich integriert wurde. So könnte beispielsweise eine Webanwendung immer aktualisiert werden, sobald neue Features fertig entwickelt und getestet sind.
 
-Auch wenn Kontinuierliche Integration gerade am Anfang mit zusätzlichem Aufwand verbunden ist, gibt es auf lange Sicht doch viele Vorteile, die den Einsatz in den meisten Softwareprojekten sinnvoll machen.
+Auch wenn Kontinuierliche Integration gerade am Anfang mit zusätzlichem Aufwand verbunden ist, gibt es auf lange Sicht doch viele Vorteile, die den Einsatz in den meisten etwas umfangreicheren Softwareprojekten sinnvoll machen.
 Tauchen bei der Entwicklung Fehler auf, so können diese schnell und zeitnah behoben werden.
-Zudem ermöglicht es kontinuierliche Integration, immer eine sehr aktuelle Version der Software für Demonstrationen für beispielsweise Vertriebszwecke zur Verfügung zu haben. Zudem wird durch kürzere Integrationszyklen auch der Aufwand der einzelnen Integrationen der Neuerungen in den Produktionscode deutlich verringert.
-Die Gefahr das neu entwickelte Komponenten nur schwer in die bestehende Code Basis integriert werden können, wird dadurch minimiert.
+Zudem ermöglicht es kontinuierliche Integration, immer eine sehr aktuelle Version der Software für Demonstrationen für beispielsweise Vertriebszwecke zur Verfügung zu haben.
+Eine Gefahr bei zu sehr langen Integrationszyklen ist es, dass die gemeinsame Codebasis sich zu stark in der Zeit ändert, in der ein neues, großes Feature entwickelt wird. Dies führt dazu, dass das einbinden des neuen Features zu einer langwierigen und komplizierten Aufgabe wird. Werden die Integrationszyklen hingegen klein gehalten, so wird der Gesamtaufwand einer Integration deutlich verringert.
 
 \section{Einführung in die Verwendung von Circle CI}
-Der wichtigste Punkt an einem neuen Tool für uns als Entwickler ist es, dass wir es effektiv und effizient einsetzten können. In unserem Fall stellt sich damit die Frage, wie wir ein neues oder bereits bestehendes Projekt kontinuierlich integrieren können. Hierbei sehen wir uns zuerst die SaaS Version von Circle CI an, da diese uns gerade am Anfang administrativen Aufwand erspart. Für die Integration des eigenen Projekts in Circle CI macht es im Grunde genommen keinen Unterschied, ob Code für das Projekt bereits geschrieben wurde, oder ob man mit einem neuen Projekt beginnt, in dem es weder Code noch Tests gibt. Das Projekt benötigt lediglich eine Datei config.yml in einem Ordner .circleci, den man in das Root Verzeichnis des Projektes ablegt, das in Circle CI gebaut werden soll. Diese Datei in Verbindung mit der Autorisierung des Repositories genügen, um das Projekt von Circle CI bauen und testen zu können. Auf die genaue Konfiguration, die in der YAML Datei hinterlegt wird, gehen wir später etwas genauer anhand eines praktische Beispiels ein.
+Eine wichtige Frage bei der Einführung neuer Tools in ein Projekt ist immer, welche Vorteile und Nachteile sich aus der Verwendung ergeben. Bei Circle CI sehen wir uns dabei verstärkt die SaaS Variante an, da diese uns gerade am Anfang administrativen Aufwand und die Notwendigkeit von extra Hardware für die Installation erspart. Für die Integration des eigenen Projekts in Circle CI macht es im Grunde genommen keinen Unterschied, ob Code für das Projekt bereits geschrieben wurde, oder ob man mit einem neuen Projekt beginnt, in dem es weder Code noch Tests gibt. Im Code selbst sind keine Änderungen notwendig. Das Projekt benötigt lediglich eine Datei mit dem Namen \textit{config.yml} in einem Ordner \textit{.circleci}, den man in das Root Verzeichnis des Projektes ablegt, das in Circle CI gebaut werden soll. Für Circle CI stellt diese Datei eine Anleitung mit einzelnen Arbeitsschritten bereit. Diese Datei in Verbindung mit der Autorisierung des Repositories genügen, um das Projekt von Circle CI bauen und testen zu können. Auf die genaue Konfiguration, die in der YAML Datei hinterlegt wird, gehen wir später etwas genauer anhand eines praktische Beispiels ein.
 
-Über die Weboberfläche von Circle CI kann dann ausgewählt werden, welche der eigenen Projekte kontinuierlich gebaut werden sollen. Wird CircleCI beispielsweise in Verbindung mit GitHub betrieben, werden alle verfügbaren Projekte bereits in Dieser aufgelistet. Die Projekte, die gebaut werden sollen, müssen dann nur noch ausgewählt werden. Der Aufwand, eigene Projekte mit Circle CI kontinuierlich zu integrieren, ist damit minimal. 
+Über die Weboberfläche von Circle CI kann dann ausgewählt werden, welche der eigenen Projekte kontinuierlich gebaut werden sollen. Wird CircleCI beispielsweise in Verbindung mit GitHub betrieben, indem sich der Nutzer über seine GitHub Credentials authentifiziert, werden alle verfügbaren Projekte bereits in Dieser aufgelistet. Die Projekte, die gebaut werden sollen, müssen dann nur noch ausgewählt werden. Der Aufwand, eigene Projekte mit Circle CI kontinuierlich zu integrieren, ist damit minimal. 
 
 \subsection{Funktionsweise von Circle CI}
-Circle CI testet die eigenen Projekte in jeweils eigenen Containern oder Virtuellen Maschinen, die auf die Bedürfnisse der Projekte angepasst sind. Neben Linux basierten Containern und VMs können allerdings auch macOS basierte "Single Use" VMs für das Testen von iOS und macOS Anwendungen verwendet werden.
-Damit stellt Circle CI sicher, dass mehrere Jobs sehr einfach parallel laufen können, ohne dass sich diese gegenseitig beeinflussen.
-
+Circle CI testet Projekte in jeweils eigenen Containern oder Virtuellen Maschinen, die auf die Bedürfnisse der Projekte angepasst sind. Neben Linux basierten Containern und VMs können allerdings auch macOS basierte "Single Use" VMs für das Testen von iOS und macOS Anwendungen verwendet werden.
+Damit stellt Circle CI sicher, dass mehrere Jobs sehr einfach parallel laufen können, ohne dass sich diese gegenseitig beeinflussen. So wird sichergestellt, dass jeder Build in der selben, sauberen Umgebung ausgeführt wird.
 
 \section {Vergleich zu anderen Tools und Anbieter}
 \subsection {Vergleich zum Open Source Automatisierungsserver Jenkins}
@@ -49,22 +55,45 @@ Hardware bereitgestellt werden muss, auf der Jenkins installiert wird.
 Ein weiterer Unterschied zu Circle CI ist zudem, dass die Funktionalität von Jenkins stark von Plugins abhängig ist.
 Funktionalitäten wie das Auschecken von Git Repositories werden bei Jenkins durch Plugins realisiert.
 Auf der einen Seite erhöht dies die Flexibilität, auf der anderen Seite erhöht dies wiederum den administrativen Aufwand erhöht.
-Jenkins führt die zu automatisierenden Aufgaben in einem normalen Dateisystem Verzeichnis aus.
+Jenkins führt die zu automatisierenden Aufgaben in einem gewöhnlichen Verzeichnis im Dateisystem des Hosts aus.
 Dabei gibt es von Haus aus keine Abschottung des Testcodes zum Host Betriebssystem, auf dem die Jenkins Instanz läuft.
 Werden nun mehrere Aufgaben gleichzeitig über Multithreading realisiert, so sind dieses nicht von einander strikt getrennt und können sich gegenseitig beeinflussen.
 Möchte man die Tests in getrennten Bereichen ausführen, so muss dies vom Nutzer selbst umgesetzt werden.
 Wie bereits beschrieben setzt CircleCI im Gegensatz dazu von Haus aus auf von einander abgeschottete Container oder Virtuelle Maschinen.
-Eine parallelisierte Ausführung von Aufgaben ist damit sehr einfach umzusetzen.
+Eine parallelisierte Ausführung von Aufgaben, die gegenseitig strickt von einander getrennt sind, ist damit sehr einfach umzusetzen.
 
 Abschließend kommt es auf den Umfang des Projekts und die Kapazität von Entwicklern und Administratoren an, welche Lösung besser geeignet ist.
-Sind die Projekte kleiner, gibt es wenig Kapazität für administrative Aufgaben und soll das Projekt so schnell wie möglich in kontinuierlich integriert werden, lohnt sich Circle CI.
-Wachsen die Projekte jedoch im Umfang und Entwicklungszeit, so lohnt sich der administrative Aufwand und das Anschaffen neuer Hardwarekapazitäten für Jenkins.
+Sind die Projekte kleiner, gibt es wenig Kapazität für administrative Aufgaben und soll das Projekt so schnell wie möglich in kontinuierlich integriert werden, lohnt sich Circle CI oder eine andere Software as a Service Lösung.
+Wachsen die Projekte jedoch im Umfang und Entwicklungszeit, so lohnt sich der administrative Aufwand und das Anschaffen neuer Hardwarekapazitäten für Jenkins möglicherweise, da man hier gerade bei länger Entwicklungs-, Test- und Übersetzungsdauer auf lange Sicht die monatlichen Kosten von Circle CI einspart. Jenkins ist mit seinen vielen Plugins allerdings auch flexibler, während Erweiterungen bei Circle CI selbst entwickelt und integriert werden müssen.
 
 \subsection {Vergleich zu SaaS CI Lösung Travis}
-Travis CI ist im Gegensatz zu Jenkins genau wie Circle CI eine Cloud basierte CI Lösung. Die meisten der Vor- und Nachteile von Circle CI treffen somit auch auf Travis CI zu. Es existieren allerdings trotzdem einige kleinere Unterschiede zwischen den beiden CI Tools. Der erste Unterschied sind die Preise der beiden Tools. Travis CI ist lediglich für Open Source Projekte kostenlos verfügbar, während Circle CI auch für Geschäftskonten oder private Code Repositories bis zu bestimmten Grenzen kostenlos bleibt. Gerade für kleine Projekte mit geringer Build Zeit ist Circle CI daher besser geeignet, wenn der Code nicht öffentlich zugänglich ist. Für Open Source Projekte hingegen bietet Travis CI jedoch mehr Freiheiten. Ein weiterer Unterschied ist, das Travis CI auch Windows als Umgebung für Build anbietet. Ein Support für eine Windows Umgebung ist allerdings für die Zukunft geplant.
-Circle CI bietet allerdings im Vergleich zu Travis eine geringere Queueing Zeit für die eigenen Builds, sowie bessere Kontrolle über Hardware Ressourcen. Ein weiterer Vorteil von Circle CI ist, die breitere Skalierbarkeit für größere Software Projekte.
-Travis CI bietet auf der anderen Seite einen breiter gefächerten Support für mehr Sprachen, sowie Build Matrizen, die es erlauben, Tests in verschiedenen Sprach und Umgebungsversionen auszuführen.
+Travis CI ist im Gegensatz zu Jenkins genau wie Circle CI eine Cloud basierte CI Lösung. Die meisten der Vor- und Nachteile von Circle CI treffen somit auch auf Travis CI zu. Es existieren allerdings trotzdem einige kleinere Unterschiede zwischen den beiden CI Tools. Der erste Unterschied sind die Preise der beiden Tools. Travis CI ist lediglich für Open Source Projekte kostenlos verfügbar, während Circle CI auch für Geschäftskonten oder private Code Repositories bis zu bestimmten Grenzen kostenlos bleibt. Gerade für kleine Projekte mit geringer Build Zeit ist Circle CI daher besser geeignet, wenn der Code nicht öffentlich zugänglich ist. Für Open Source Projekte hingegen bietet Travis CI jedoch mehr Freiheiten. Im Gegensatz zu Circle CI unterstützt Travis CI Builds und Tests in einer Windows Umgebung. Circle CI plant diese allerdings nachzuliefern.
+Circle CI bietet dafür wiederum eine geringere Queueing Zeit für Builds, sowie bessere Kontrolle über Hardware Ressourcen. Ein weiterer Vorteil von Circle CI ist, die breitere Skalierbarkeit für größere Software Projekte. Dabei werden die Pakete mit wachsender Leistung allerdings auch stark im Preis.
+Travis CI bietet auf der anderen Seite einen breiter gefächerten Support für mehr Sprachen, sowie Build Matrizen, die es erlauben, Tests in verschiedenen Sprach- und Umgebungsversionen auszuführen.
 
 Eine einfache Wahl zwischen den beiden Plattformen ist hier nur unter Berücksichtigung vieler Details machbar. Eine einfache Empfehlung ist aufgrund ihrer Ähnlichkeit nur schwer zu geben.
+
+\section{Beispielprojekte}
+Nach den grundlegenden Konzepten von Circle CI bietet es sich besonders an, ein eigenes kleines Beispielprojekt in Circle CI zu integrieren. Hierbei gehen wir in den nächsten zwei Unterabschnitte auf zwei sehr überschaubare Beispiele ein.
+
+\subsection{Python Projekt}
+Das erste kleine Projekt ist ein in Python geschriebener Quelltext, dass auf Basis eines Master-Passwortes, eines Nutzernamen und eines Dienstes ein Passwort generieren soll, das einfach mit Hilfe des Master Passwortes wiederherstellbar sein soll. Die Implementierung ist hierbei zweitrangig und stellt keinerlei Ansprüche auf Sicherheit.
+\lstinputlisting[language=Python]{../../example_project/passwordmanager/Passwordmanager.py}
+Die Generierung des Passwortes lässt sich allerdings sehr gut mit einfachen Unit Tests überprüfen.
+\lstinputlisting[language=Python]{../../example_project/test/PasswordManagerTest.py}
+Daneben legen wir eine weitere Klasse an, die auf dem PasswordManager aufbauen soll.
+\lstinputlisting[language=Python]{../../example_project/passwordmanager_user/PasswordManagerUser.py}
+Auch hier legen wir einen weiteren Test an, der die Funktionalität der Klasse prüfen soll.
+\lstinputlisting[language=Python]{../../example_project/test/PasswordManagerUserTest.py}
+Fügen wir nun Änderungen in der PasswortManager Klasse hinzu, so müssen wir in diesem Fall darauf achten, dass wir dabei auch Klassen anpassen, die vom PasswordManager abhängig sind. Eine Gefahr wäre nun, dass genau die nicht gemacht wird und der Fehler unentdeckt bleibt, wenn wir nach den Änderungen des PasswordManager lediglich lokal dessen Tests ausführen.
+Da wir allerdings nicht immer wissen welche Klassen und Methoden inhaltlich zusammenhängen ist es auch schwer, alle "betroffenen" Tests auszuführen, womit uns lediglich übrig bleibt, alle Tests auszuführen im Projekt gibt.
+Hier kommt Circle CI ins Spiel, da hiermit alle Tests ausgeführt werden können, ohne den Entwickler und dessen Rechner für eine längere Zeit zu blockieren.
+
+\subsubsection{Integration des PasswordManagers in Circle CI}
+
+Bis hier haben wir keine Anstrengung unternommen unseren Code kontinuierlich integrieren zu können. Wie in der Anleitung bereits erwähnt, benötigen wir auch keinerlei Änderungen am Code, sondern lediglich eine Anleitung, was Circle CI mit dem Projekt tun soll. Hierfür legen wir in unserem Projekt einen Ordner \textit{.circleci} mit einer Datei \textit{config.yml} an.
+
+\subsection{Latex Dokumenten Generation}
+
 
 \end{document}

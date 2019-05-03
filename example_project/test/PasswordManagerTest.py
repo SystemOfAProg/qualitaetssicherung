@@ -13,14 +13,14 @@ class PasswordManagerTest(unittest.TestCase):
     # Try with unexpected params II
     def test_bad_params_two(self):
         manager = PasswordManager(self._master_password)
-        self.assertRaises(ValueError, lambda: manager.generate_password_for("", "github"))
+        self.assertRaises(ValueError, lambda: manager.generate_password_for("", "circleci"))
         self.assertRaises(ValueError, lambda: manager.generate_password_for("fabian", ""))
-        self.assertRaises(TypeError, lambda: manager.generate_password_for(5, "github"))
+        self.assertRaises(TypeError, lambda: manager.generate_password_for(5, "circleci"))
         self.assertRaises(TypeError, lambda: manager.generate_password_for("fabian", 5))
 
     def test_password(self):
         manager = PasswordManager(self._master_password)
-        self.assertEqual(manager.generate_password_for("fabian", "github"), manager.generate_password_for("fabian", "github"))
+        self.assertEqual(manager.generate_password_for("fabian", "circleci"), manager.generate_password_for("fabian", "circleci"))
 
 
 
