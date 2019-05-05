@@ -178,26 +178,11 @@ findet sich eine Vielzahl von Felden, die den Ablauf der Tests beeinflussen. Auf
 
 \subsection{Latex Dokumenten Generation}
 
-Nach Integration des Python Projektes stellte sich die Frage, wie
-welche Aufgaben Circle CI noch erledigen kann, auch wenn diese
-nicht offiziell unterstützt werden. Daher entschieden wir uns zu versuchen,
-auch das Bauen dieses Dokuments als Job in Circle CI zu integrieren, obwohl
-keinerlei Unterstützung für das Übersetzen von Latex Dateien geboten wird.
-Für die Übersetzung benötigen wir lediglich eine Umgebung, in der eine passende
-Latex Distribution bereitgestellt ist, die das Dokument mit einem einfachen
-\textit{pdflatex} Befehl übersetzt werden kann. Circle CI bietet allerdings
-keine Maschine oder Docker Container, die für diese Aufgabe geeignet war.
-Daher entschieden wir uns für die Einbindung des Docker Containers
-\textit{koppor/texlive}, der nicht von Circle CI selbst stammt, aber problemlos
-funktionieren soll.
+Nach Integration des Python Projektes stellte sich die Frage, wie welche Aufgaben Circle CI noch erledigen kann, auch wenn diese nicht offiziell unterstützt werden. Daher entschieden wir uns zu versuchen, auch das Bauen dieses Dokuments als Job in Circle CI zu integrieren, obwohl keinerlei Unterstützung für das Übersetzen von Latex Dateien geboten wird. Für die Übersetzung benötigen wir lediglich eine Umgebung, in der eine passende Latex Distribution bereitgestellt ist, die das Dokument mit einem einfachen \textit{pdflatex} Befehl übersetzt werden kann. Circle CI bietet allerdings keine Maschine oder Docker Container, die für diese Aufgabe geeignet war. Daher entschieden wir uns für die Einbindung des Docker Containers \textit{koppor/texlive}, der nicht von Circle CI selbst stammt, aber problemlos funktionieren soll.
 
 \subsection{Konfiguration der Circle CI Pipeline}
-Für unser eigenes Projekt
-genügen jedoch nur einige wenige. Die Konfigurationsdatei beginnt mit der Angabe der Version von Circle CI,
-die verwendet werden soll. Wir entscheiden uns für die Aktuellste Version 2.1. Das nächste Feld listet die
-Jobs auf, die Circle CI ausführen soll. Beide werden später bei der Angabe ihrer Ausführungsreihenfolge
-über ihre Namen referenziert. In unserem Fall beschreiben wir die beiden Jobs über die Angabe der Umgebung die
-verwendet werden soll, als auch über die Befehle, die ausgeführt werden sollen.
+Für unser eigenes Projekt genügen jedoch nur einige wenige. Die Konfigurationsdatei beginnt mit der Angabe der Version von Circle CI, die verwendet werden soll. Wir entscheiden uns für die Aktuellste Version 2.1. Das nächste Feld listet die Jobs auf, die Circle CI ausführen soll. Beide werden später bei der Angabe ihrer Ausführungsreihenfolge über ihre Namen referenziert. In unserem Fall beschreiben wir die beiden Jobs über die Angabe der Umgebung die verwendet werden soll, als auch über die Befehle, die ausgeführt werden sollen. In beiden Fällen entscheiden wir uns für die Verwendung eines Docker Containers, der alle wichtigen Abhängigkeiten wie eine Python Installation oder eine Latex Distribution für das Übersetzen unseres Dokument mitbringt. Alternativ könnten wir hier auch Virtuelle Maschinen auf Linux oder macOS Basis verwenden, wenn wir diese für unseren Job benötigen würden.
+Im nächsten Schritt definieren wir noch die Arbeitsschritte die für unseren Job notwendig sind. Diese werden in einer Liste beschrieben, die Circle CI dann sequentiell abarbeitet. In beiden Fällen beginnen wir dann mit dem auschecken des Projektes aus der Versionsverwaltung, welche wir mit dem Keyword \textit{checkout} anstoßen können. Im Anschluass folgen die nächsten Arbeitsschritte, die durch das Keyword 
 
 \section{Anhang}
 
@@ -206,5 +191,7 @@ verwendet werden soll, als auch über die Befehle, die ausgeführt werden sollen
 \lstinputlisting[label={lst:pwdmuser},caption={Klasse die von Änderungen in der Password Manager Klasse betroffen sein kann},language=Python]{../../example_project/passwordmanager_user/PasswordManagerUser.py}
 \lstinputlisting[label={lst:pwdmutest},caption={Tests für die Klasse PasswordManagerUser},language=Python]{../../example_project/test/PasswordManagerUserTest.py}
 \lstinputlisting[label={lst:cciconfig},caption={YML Konfiguration für Circle CI},language=Python]{../../.circleci/config.yml}
+\lstinputlisting[label={lst:latexsh},caption={Shell Script für für den Bau des Latex Dokuments},language=Bash]{../../.circleci/job_document.sh}
+\lstinputlisting[label={lst:pythonsh},caption={Shell Script für für den Bau des Latex Dokuments},language=Bash]{../../.circleci/job_python.sh}
 
 \end{document}

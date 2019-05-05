@@ -6,8 +6,9 @@ jobs:
       - image: koppor/texlive
     steps:
       - checkout
-      - run: chmod a+x .circleci/job_document.sh
-      - run: .circleci/job_document.sh
+      - run: 
+          name: Latex Generation Shell Script
+          command: chmod a+x .circleci/job_document.sh && .circleci/job_document.sh
       - store_artifacts:
           path: /tmp/artifacts
   run_python_tests:
@@ -15,8 +16,9 @@ jobs:
       - image: circleci/python:latest # the primary container, where your job's commands are run
     steps:
       - checkout # check out the code in the project directory
-      - run: chmod a+x .circleci/job_python.sh
-      - run: .circleci/job_python.sh
+      - run:
+        name: Python Tests Shell Script
+        command: chmod a+x .circleci/job_python.sh && .circleci/job_python.sh
 
 workflows:
   version: 2.1

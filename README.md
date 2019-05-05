@@ -4,3 +4,8 @@ Inhalt des Repositories sind ein kleines Python basiertes Beispielprojekt mit Te
 
 Aktueller Build auf Circle CI:
 [![CircleCI](https://circleci.com/gh/SystemOfAProg/qualitaetssicherung/tree/master.svg?style=svg)](https://circleci.com/gh/SystemOfAProg/qualitaetssicherung/tree/master)
+
+## Themen über die wir noch schreiben können
+- Weboberfläche
+- Debugging und Fehlersuche
+  - SSH Verbindungen in altive Builds
