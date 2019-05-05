@@ -7,7 +7,7 @@ class PasswordManagerUser():
     def __init__(self):
         pass
 
-    # Try with unexpected params I
+    # Check password manager and create a hash if it is ok
     def hash_password(self, pw_from_manager: str) -> str:
         print(pw_from_manager)
         if not isinstance(pw_from_manager, str):
