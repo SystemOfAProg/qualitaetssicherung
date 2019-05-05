@@ -1,12 +1,17 @@
-import unittest
+import hashlib
 from passwordmanager import PasswordManager
 
-# Class that depends on the Password Manager
+# Class with porblematic implementation
 class PasswordManagerUser():
 
     def __init__(self):
         pass
 
     # Try with unexpected params I
-    def read_master_from_pw(self, pw_from_manager: str, index: int) -> str:
-        return pw_from_manager[index:]
+    def hash_password(self, pw_from_manager: str) -> str:
+        print(pw_from_manager)
+        if not isinstance(pw_from_manager, str):
+            raise ValueError("Password is not a string")
+        if not len(pw_from_manager) == 16:
+            raise ValueError("Password is too short")
+        return (hashlib.sha256(('%s' % (pw_from_manager)).encode('utf-8')).hexdigest())

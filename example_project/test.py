@@ -1,5 +1,5 @@
 from test.PasswordManagerTest import PasswordManagerTest
-from test.PasswordManagerUserTest import PasswordManagerTest2
+from test.PasswordManagerUserTest import PasswordManagerUserTest
 import unittest
 
 if __name__ == "__main__":

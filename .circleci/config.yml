@@ -3,29 +3,24 @@ version: 2.1
 jobs:
   latex_document_build:
     docker:
-     - image: koppor/texlive
+      - image: koppor/texlive
     steps:
-     - checkout
-     - run: pdflatex documentation/Latex/Ausarbeitung.tex
-     - run:
-        name: Store Build Artifacts
-        command: |
-          mkdir /tmp/artifacts 
-          cp -R *.pdf /tmp/artifacts/
-     - store_artifacts:
+      - checkout
+      - run: chmod a+x .circleci/job_document.sh
+      - run: .circleci/job_document.sh
+      - store_artifacts:
           path: /tmp/artifacts
   run_python_tests:
     docker: # use the docker executor type; machine and macos executors are also supported
       - image: circleci/python:latest # the primary container, where your job's commands are run
     steps:
       - checkout # check out the code in the project directory
-      - run:
-          name: Run Tests 
-          command: 'python3 example_project/test.py'
+      - run: chmod a+x .circleci/job_python.sh
+      - run: .circleci/job_python.sh
 
 workflows:
   version: 2.1
   build_and_test:
     jobs:
-      - latex_document_build
+      # - latex_document_build
       - run_python_tests

@@ -1,5 +1,13 @@
-# Pycharm
+# Personal Project Related
+# Latex output direcotry
+documentation/Latex/documentation_*
+documentation/Latex/*.fls
+documentation/Latex/*.fdb_latexmk
+documentation/Latex/*.pdf
+
+# IDE Configuration
 .idea/
+.vscode/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
