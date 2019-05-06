@@ -17,12 +17,11 @@ jobs:
     steps:
       - checkout # check out the code in the project directory
       - run:
-        name: Python Tests Shell Script
-        command: chmod a+x .circleci/job_python.sh && .circleci/job_python.sh
+          name: Python Tests Shell Script
+          command: chmod a+x .circleci/job_python.sh && .circleci/job_python.sh
 
 workflows:
   version: 2.1
   build_and_test:
-    jobs:
-      # - latex_document_build
+    jobs: # - latex_document_build
       - run_python_tests
