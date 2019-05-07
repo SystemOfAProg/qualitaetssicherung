@@ -100,21 +100,21 @@ Umgebung ausgeführt wird.
 \section{Fehlersuche und Debugging}
 \subsection{Test Metadaten}
 CircleCI kann so konfiguriert werden, dass Testdaten und -ergebnisse gespeichert und eingesehen werden können.
-Dadurch können Informationen über die Performance der Tests erhalten und im Fall von auftetenden Fehlern und 
+Dadurch können Informationen über die Performance der Tests erhalten und im Fall von auftretenden Fehlern und 
 gescheiterten Tests die Fehlerquellen schneller entdeckt werden. Über einen Konfigurationsschritt in der 
 YAML Datei kann das Sammeln von Testdaten aktiviert werden. Die Metadaten werden in einer XML Datei gespeichert 
 und können in der Insights Ansicht der Weboberfläche angezeigt werden. Außerdem besteht die Möglichkeit die 
-Datei am Ende eines Jobdurchlaufes als Artifact zur Verfügung gestellt werden.
+Datei am Ende eines Jobdurchlaufes als Artefakt zur Verfügung gestellt werden.
 
 \subsection{Debugging mit SSH}
-CircleCI bietet im Fall eines auftetenden Fehlers die Möglichkeit zum Debuggen mit SSH. Dadurch ist es 
+CircleCI bietet im Fall eines auftretenden Fehlers die Möglichkeit zum Debuggen mit SSH. Dadurch ist es 
 möglich einzelne Jobs und Container zu erreichen und Log Files, laufende Prozesse und Directory Pfade zu 
 untersuchen. Um so eine Untersuchung zu starten, muss der verwendete GitHub Account einen SSH Key enthalten.
 Wenn das der Fall ist, kann in der Detailansicht eines abgeschlossenen Jobs über ein Dropdown Menü die Funktion
 "Rerun job with SSH" ausgeführt werden. Dadurch wird der Job erneut gestartet und kann nach der Eingabe des 
 SSH Keys durch die SSH Verbindung überwacht und untersucht werden. Für den Fall, dass beim Verbindungsversuch
-"Permission denied" Fehler aufteten, besteht die Möglichkeit über einzelne Kommandos die angegebenen Nutzer 
-und Keys zu überprüfen. 
+"Permission denied" Fehler auftreten, besteht die Möglichkeit über einzelne Kommandos die angegebenen Nutzer 
+und Keys zu überprüfen.
 
 \section {Vergleich zu anderen Tools und Anbieter}
 \subsection {Vergleich zum Open Source Automatisierungsserver Jenkins}
