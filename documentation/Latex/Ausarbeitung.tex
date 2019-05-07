@@ -83,6 +83,8 @@ genügen, um das Projekt von Circle CI bauen und testen zu können. Auf die gena
 in der YAML Datei hinterlegt wird, gehen wir später etwas genauer anhand eines praktische Beispiels
 ein.
 
+Ein weiteres Konzept von Circle CI zu Vereinfachung der Konfiguration sind sogenannte \textit{Orbs}, die es erlauben, bestimmte Konfigurationen als Pakete einfach wiederzuverwenden. Möchte man diese verwenden, so kann man die passenden in die eigene Konfiguration einbinden.
+
 Über die Weboberfläche von Circle CI kann dann ausgewählt werden, welche der eigenen Projekte
 kontinuierlich gebaut werden sollen. Wird CircleCI beispielsweise in Verbindung mit GitHub betrieben,
 indem sich der Nutzer über seine GitHub Credentials authentifiziert, werden alle verfügbaren Projekte
@@ -97,7 +99,7 @@ Damit stellt Circle CI sicher, dass mehrere Jobs sehr einfach parallel laufen k�
 diese gegenseitig beeinflussen. So wird sichergestellt, dass jeder Build in der selben, sauberen
 Umgebung ausgeführt wird.
 
-\section{Fehlersuche und Debugging}
+\section{Fehlersuche, Debugging und Performanceverbesserungen}
 \subsection{Test Metadaten}
 CircleCI kann so konfiguriert werden, dass Testdaten und -ergebnisse gespeichert und eingesehen werden können.
 Dadurch können Informationen über die Performance der Tests erhalten und im Fall von auftretenden Fehlern und 
@@ -116,52 +118,38 @@ SSH Keys durch die SSH Verbindung überwacht und untersucht werden. Für den Fal
 "Permission denied" Fehler auftreten, besteht die Möglichkeit über einzelne Kommandos die angegebenen Nutzer 
 und Keys zu überprüfen.
 
+\subsection{Verbesserungen der Performance}
+Um Builds so effizient wie möglich auszuführen, unterstützt Circle CI sowohl eine nebenläufige Ausführung von Jobs, als auch Aufteilung und parallele Ausführung von Tests. Jobs, die nicht von einander abhängig sind, führt Circle CI bereits automatisch nebenläufig aus. Bei der Parallelisierung von Tests hingegen, muss vom Nutzer spezifiziert werden, wie die einzelnen Testdateien aufgeteilt werden sollen. Dabei gibt es folgende Möglichkeiten der Aufteilung:
+\begin{enumerate}
+	\item Automatische Verteilung mit Hilfe der CLI auf die zur Verfügung stehenden Container.
+    \item Aufteilung basierend auf dem Namen der Testdateien
+    \item Aufteilung basierend auf der Größe der Testdateien
+    \item Aufteilung nach Testdauer, falls deren Speicherung vom Nutzer konfiguriert wurde
+\end{enumerate}
+Die Aufteilung der Tests werden von der CLI in Form einer Textdatei realisiert. Diese kann dann durch eine Umgebungsvariable referenziert werden und die Aufteilung der Tests bei der Ausführung bekannt machen.
+
+\section{Schnittstellen}
+Circle CI bietet verschiedene Möglichkeiten der Interaktion, mit denen Benutzer der Plattform verschiedene Aufgaben erledigen kann.
+
+\subsection{Command Line Interface}
+Circle CI bietet ein Command Line Interface an, das es erlaubt, bestimmte lokale Aufgaben im eigenen Projekt auszuführen und mit der Circle CI Plattform zu interagieren. Eine Funktionalität ist beispielsweise die Kombination mehrerer Konfigurationsdateien zu einer größeren zusammenhängenden Datei. Des Weiteren lässt sich die lokale Konfigurationsdatei mit der CLI einfach validieren. Circle CI CLI bietet Entwicklern auch die Möglichkeit, Jobs lokal auf dem eigenen Rechner auszuführen, wenn auch mit Einschränkungen. Ganze Workflows oder Jobs in einer Single-Use VM können lokal mit der CLI nicht angestoßen werden. 
+
+\subsection{Weboberfläche}
+Die erste Anlaufstelle für Circle CI ist die Weboberfläche, die dem Nutzer viele Interaktions- und Überwachungsmöglichkeiten bietet. Wurden Änderungen in die Versionsverwaltung aufgenommen, so lässt sich über die Weboberfläche alle wichtigen Daten einsehen, die den angestoßenen Workflow betreffen, einsehen. Den in der Konfiguration definierten Workflow können wir hier grafisch einsehen sowie die Ergebnisse, Fehler, Artefakte und Zeiten der einzelnen Jobs. Die Logs der einzelnen Arbeitsschritte der Logs werden in der Weboberfläche dargestellt. Ist ein Job fehlgeschlagen, können dessen Logs hier eine gute erste Anlaufstelle für die Fehlersuche sein.
+
+Neben dieser Funktionen können über die Weboberfläche auch neue Repositories in Circle CI aufgenommen werden oder bereits aufgenommene wieder entfernt werden, falls diese nicht mehr kontinuierlich integriert werden sollen.
+
+\subsection{Circle CI API}
+Eine letzte Interaktionsmöglichkeit mit Circle CI ist die Verwendung der über HTTP erreichbaren API. Diese kann beispielsweise über CLIs wie \textit{curl} verwendet werden, um die Ausführung bestimmter Jobs anzustoßen, Informationen über die eigenen Projekte abzurufen und viele mehr Funktionen. Neben der umfangreichen Weboberfläche eröffnet diese Schnittstelle neue Möglichkeiten, Informationen aus Circle CI so an anderen Stellen einzubinden, wie man dies möchte. Ein Beispiel hierfür wäre, Ergebnisse aus Circle CI Builds in einer anderen Webanwendung einzubinden.
+
 \section {Vergleich zu anderen Tools und Anbieter}
 \subsection {Vergleich zum Open Source Automatisierungsserver Jenkins}
-Jenkins ist ein quelloffener Java basierter Automatisierungsserver, der sehr oft für kontinuierliche
-Integration und Auslieferung zum Einsatz kommt.
-Jenkins bietet selbst somit keine Software as a Service Lösung an, die private Anwender sofort nutzen
-können.
-Im Vergleich zu Circle CI bedeutet dies für den Nutzer allerdings gerade am Anfang einen erhöhten
-Aufwand für Administration und höhere Kosten, da eigene 
-Hardware bereitgestellt werden muss, auf der Jenkins installiert wird. Ein weiterer Unterschied zu Circle CI
-ist zudem, dass die Funktionalität von Jenkins stark von Plugins abhängig ist. Funktionalitäten wie das
-Auschecken von Git Repositories werden bei Jenkins durch Plugins realisiert.
-Auf der einen Seite erhöht dies die Flexibilität, auf der anderen Seite erhöht dies wiederum den
-administrativen Aufwand erhöht. Jenkins führt die zu automatisierenden Aufgaben in einem gewöhnlichen
-Verzeichnis im Dateisystem des Hosts aus. Dabei gibt es von Haus aus keine Abschottung des Testcodes zum
-Host Betriebssystem, auf dem die Jenkins Instanz läuft. Werden nun mehrere Aufgaben gleichzeitig über
-Multithreading realisiert, so sind dieses nicht von einander strikt getrennt und können sich gegenseitig
-beeinflussen. Möchte man die Tests in getrennten Bereichen ausführen, so muss dies vom Nutzer selbst
-umgesetzt werden. Wie bereits beschrieben setzt CircleCI im Gegensatz dazu von Haus aus auf von einander
-abgeschottete Container oder Virtuelle Maschinen. Eine parallelisierte Ausführung von Aufgaben, die
-gegenseitig strickt von einander getrennt sind, ist damit sehr einfach umzusetzen.
+Jenkins ist ein quelloffener Java basierter Automatisierungsserver, der sehr oft für kontinuierliche Integration und Auslieferung zum Einsatz kommt. Jenkins bietet selbst somit keine Software as a Service Lösung an, die private Anwender sofort nutzen können. Im Vergleich zu Circle CI bedeutet dies für den Nutzer allerdings gerade am Anfang einen erhöhten Aufwand für Administration und höhere Kosten, da eigene  Hardware bereitgestellt werden muss, auf der Jenkins installiert wird. Ein weiterer Unterschied zu Circle CI ist zudem, dass die Funktionalität von Jenkins stark von Plugins abhängig ist. Funktionalitäten wie das Auschecken von Git Repositories werden bei Jenkins durch Plugins realisiert. Auf der einen Seite erhöht dies die Flexibilität, auf der anderen Seite erhöht dies wiederum den administrativen Aufwand erhöht. Jenkins führt die zu automatisierenden Aufgaben in einem gewöhnlichen Verzeichnis im Dateisystem des Hosts aus. Dabei gibt es von Haus aus keine Abschottung des Testcodes zum Host Betriebssystem, auf dem die Jenkins Instanz läuft. Werden nun mehrere Aufgaben gleichzeitig über Multithreading realisiert, so sind dieses nicht von einander strikt getrennt und können sich gegenseitig beeinflussen. Möchte man die Tests in getrennten Bereichen ausführen, so muss dies vom Nutzer selbst umgesetzt werden. Wie bereits beschrieben setzt CircleCI im Gegensatz dazu von Haus aus auf von einander abgeschottete Container oder Virtuelle Maschinen. Eine parallelisierte Ausführung von Aufgaben, die gegenseitig strickt von einander getrennt sind, ist damit sehr einfach umzusetzen.
 
-Abschließend kommt es auf den Umfang des Projekts und die Kapazität von Entwicklern und Administratoren
-an, welche Lösung besser geeignet ist. Sind die Projekte kleiner, gibt es wenig Kapazität für
-administrative Aufgaben und soll das Projekt so schnell wie möglich in kontinuierlich integriert
-werden, lohnt sich Circle CI oder eine andere Software as a Service Lösung. Wachsen die Projekte
-jedoch im Umfang und Entwicklungszeit, so lohnt sich der administrative Aufwand und das Anschaffen
-neuer Hardwarekapazitäten für Jenkins möglicherweise, da man hier gerade bei länger Entwicklungs-,
-Test- und Übersetzungsdauer auf lange Sicht die monatlichen Kosten von Circle CI einspart.
-Jenkins ist mit seinen vielen Plugins allerdings auch flexibler, während Erweiterungen bei Circle CI
-selbst entwickelt und integriert werden müssen.
+Abschließend kommt es auf den Umfang des Projekts und die Kapazität von Entwicklern und Administratoren an, welche Lösung besser geeignet ist. Sind die Projekte kleiner, gibt es wenig Kapazität für administrative Aufgaben und soll das Projekt so schnell wie möglich in kontinuierlich integriert werden, lohnt sich Circle CI oder eine andere Software as a Service Lösung. Wachsen die Projekte jedoch im Umfang und Entwicklungszeit, so lohnt sich der administrative Aufwand und das Anschaffen neuer Hardwarekapazitäten für Jenkins möglicherweise, da man hier gerade bei länger Entwicklungs-, Test- und Übersetzungsdauer auf lange Sicht die monatlichen Kosten von Circle CI einspart. Jenkins ist mit seinen vielen Plugins allerdings auch flexibler, während Erweiterungen bei Circle CI selbst entwickelt und integriert werden müssen.
 
 \subsection {Vergleich zu SaaS CI Lösung Travis}
-Travis CI ist im Gegensatz zu Jenkins genau wie Circle CI eine Cloud basierte CI Lösung. Die meisten
-der Vor- und Nachteile von Circle CI treffen somit auch auf Travis CI zu. Es existieren allerdings
-trotzdem einige kleinere Unterschiede zwischen den beiden CI Tools. Der erste Unterschied sind die
-Preise der beiden Tools. Travis CI ist lediglich für Open Source Projekte kostenlos verfügbar, während
-Circle CI auch für Geschäftskonten oder private Code Repositories bis zu bestimmten Grenzen kostenlos
-bleibt. Gerade für kleine Projekte mit geringer Build Zeit ist Circle CI daher besser geeignet, wenn der
-Code nicht öffentlich zugänglich ist. Für Open Source Projekte hingegen bietet Travis CI jedoch mehr
-Freiheiten. Im Gegensatz zu Circle CI unterstützt Travis CI Builds und Tests in einer Windows Umgebung.
-Circle CI plant diese allerdings nachzuliefern. Circle CI bietet dafür wiederum eine geringere Queueing
-Zeit für Builds, sowie bessere Kontrolle über Hardware Ressourcen. Ein weiterer Vorteil von Circle CI
-ist, die breitere Skalierbarkeit für größere Software Projekte. Dabei werden die Pakete mit wachsender
-Leistung allerdings auch stark im Preis. Travis CI bietet auf der anderen Seite einen breiter gefächerten
-Support für mehr Sprachen, sowie Build Matrizen, die es erlauben, Tests in verschiedenen Sprach- und
-Umgebungsversionen auszuführen.
+Travis CI ist im Gegensatz zu Jenkins genau wie Circle CI eine Cloud basierte CI Lösung. Die meisten der Vor- und Nachteile von Circle CI treffen somit auch auf Travis CI zu. Es existieren allerdings trotzdem einige kleinere Unterschiede zwischen den beiden CI Tools. Der erste Unterschied sind die Preise der beiden Tools. Travis CI ist lediglich für Open Source Projekte kostenlos verfügbar, während Circle CI auch für Geschäftskonten oder private Code Repositories bis zu bestimmten Grenzen kostenlos bleibt. Gerade für kleine Projekte mit geringer Build Zeit ist Circle CI daher besser geeignet, wenn der Code nicht öffentlich zugänglich ist. Für Open Source Projekte hingegen bietet Travis CI jedoch mehr Freiheiten. Im Gegensatz zu Circle CI unterstützt Travis CI Builds und Tests in einer Windows Umgebung. Circle CI plant diese allerdings nachzuliefern. Circle CI bietet dafür wiederum eine geringere Queueing Zeit für Builds, sowie bessere Kontrolle über Hardware Ressourcen. Ein weiterer Vorteil von Circle CI ist, die breitere Skalierbarkeit für größere Software Projekte. Dabei werden die Pakete mit wachsender Leistung allerdings auch stark im Preis. Travis CI bietet auf der anderen Seite einen breiter gefächerten Support für mehr Sprachen, sowie Build Matrizen, die es erlauben, Tests in verschiedenen Sprach- und Umgebungsversionen auszuführen.
 
 Eine einfache Wahl zwischen den beiden Plattformen ist hier nur unter Berücksichtigung vieler Details
 machbar. Eine einfache Empfehlung ist aufgrund ihrer Ähnlichkeit nur schwer zu geben.
@@ -182,9 +170,9 @@ findet sich eine Vielzahl von Feldern, die den Ablauf der Tests beeinflussen. Au
 
 \subsection{Latex Dokumenten Generation}
 
-Nach der erfolgreichen Integration des Python Projektes stellte sich die Frage, welche Aufgaben Circle CI noch übernehmen kann, die vielleicht nicht in der offiziellen Dokumentation erwähnt werden. Daher entschieden wir uns zu versuchen, das Bauen dieses in Latex verfassten Dokuments als Job in Circle CI zu integrieren, obwohl keinerlei Unterstützung für das Übersetzen von Latex Dateien geboten wird. Für die Übersetzung benötigen wir lediglich eine Umgebung, in der eine passende Latex Distribution bereitgestellt ist, die das Dokument beispielsweise mit einem einfachen \textit{pdflatex} Befehl übersetzt werden kann. Circle CI bietet allerdings keine virtuelle Maschine oder Docker Container, die für diese Aufgabe geeignet war. Daher entschieden wir uns für die Einbindung des Docker Containers \textit{koppor/texlive}, der nicht von Circle CI selbst stammt, aber mit der Plattform problemlos funktionieren soll. Im Gegensatz zum Python Projekte entsteht hier auch, ähnlich wie bei Projekten in Programmiersprachen, die gebaut werden, ein Endprodukt. Der Job für den Bau des Dokumentes wurde dabei so konfiguriert, dass 
+Nach der erfolgreichen Integration des Python Projektes stellte sich die Frage, welche Aufgaben Circle CI noch übernehmen kann, die vielleicht nicht in der offiziellen Dokumentation erwähnt werden. Daher entschieden wir uns zu versuchen, das Bauen dieses in Latex verfassten Dokuments als Job in Circle CI zu integrieren, obwohl keinerlei Unterstützung für das Übersetzen von Latex Dateien geboten wird. Für die Übersetzung benötigen wir lediglich eine Umgebung, in der eine passende Latex Distribution bereitgestellt ist, die das Dokument beispielsweise mit einem einfachen \textit{pdflatex} Befehl übersetzt werden kann. Circle CI bietet allerdings keine virtuelle Maschine oder Docker Container, die für diese Aufgabe geeignet war. Daher entschieden wir uns für die Einbindung des Docker Containers \textit{koppor/texlive}, der nicht von Circle CI selbst stammt, aber mit der Plattform problemlos funktionieren soll. In der offiziellen Dokumentation von Circle CI finden sich weitere Hinweise auf die Erstellung eigener Docker basierten Umgebungen. Im Gegensatz zum Python Projekte entsteht hier auch, ähnlich wie bei Projekten in Programmiersprachen, die gebaut werden, ein Endprodukt. Der Job für den Bau des Dokumentes wurde dabei so konfiguriert, dass 
 
-\subsection{Konfiguration der Circle CI Pipeline}
+\subsection{Konfiguration des Circle CI Workflows}
 In diesem Abschnitt möchten wir etwas genauer auf den Inhalt der Konfigurationsdatei unseres Projektes eingehen, deren Inhalt sich im Anhang befindet. Die Datei beginnt mit der Angabe der Version von Circle CI, die verwendet werden soll. Wir entscheiden uns für die Aktuellste Version 2.1. Das nächste Feld listet die Jobs auf, die Circle CI ausführen sollen. Beide werden später bei der Angabe der Reihenfolge bei der Ausführung über ihre Namen referenziert. Die Definition eines Jobs besteht mindestens aus zwei Teilen: der Angabe der Umgebung, in der der Job ausgeführt werden soll und die einzelnen Schritte in Form von Shell Befehlen. In beiden Fällen entscheiden wir uns für die Verwendung eines Docker Containers, der alle wichtigen Abhängigkeiten wie eine Python Installation oder eine Latex Distribution für das Übersetzen unseres Dokument mitbringt. Alternativ könnten wir hier auch Virtuelle Maschinen auf Linux oder macOS Basis verwenden, wenn wir diese für unseren Job benötigen würden.
 Darauf folgt die Liste der Shell Befehle, die Circle CI sequentiell anstößt. In beiden Jobs beginnen wir mit dem auschecken des Projektes aus der Versionsverwaltung, was mit dem Keyword \textit{checkout} anstoßen wird. Im Anschluss folgen die nächsten Arbeitsschritte, die durch das Keyword run gekennzeichnet werden. Im Fall unserer Projekte haben wir alle Befehle in ein separates Shell Script extrahiert. In der Konfigurationsdatei wird dieses Script dann aufgerufen. Alternativ könnten die einzelnen Befehle auch direkt in der Konfigurationsdatei in Form einzelner Steps definiert und benannt werden. Diese Variante ist zwar etwas aufwändiger zu schreiben, führt aber später bei der Auswertung zu einer klareren Trennung der einzelnen Arbeitsschritte.
 Eine Besonderheit im Latex Job ist das Speichern von Build Artefakten, um diese später über die Weboberfläche abzurufen. Im Fall unseres Dokuments bietet es sich besonders an, dieses bei erfolgreichem Setzen als Artefakt zu speichern. Dafür definieren wir lediglich welche Dateien oder Ordner später abrufbar sein sollen. Im Shell Script für den Latex Job haben wir das Dokument bereits in einen separaten Ordner \textit{/tmp/artifacts/} gespeichert. Diesen können wir nun in unserer Konfiguration angeben. Wurde der Build erfolgreich ausgeführt, kann die PDF des jeweiligen Builds nun über die Weboberflächen von Circle CI abgerufen und heruntergeladen werden.
