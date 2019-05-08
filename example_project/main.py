@@ -9,9 +9,9 @@ def main():
     manager: PasswordManager = PasswordManager(master_password)
     user: PasswordManagerUser = PasswordManagerUser()
     password: str = manager.generate_password_for(login, service)
-    print("Your Password is: " + password['password'])
+    print("Your Password is:             " + password['password'])
     hash = user.hash_password(password['password'])
-    print("Hash of Password is: " + hash)
+    print("Hash of Password is:          " + hash)
 
 if __name__ == "__main__":
     main()

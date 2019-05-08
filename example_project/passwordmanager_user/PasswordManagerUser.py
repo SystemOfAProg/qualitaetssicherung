@@ -9,7 +9,6 @@ class PasswordManagerUser():
 
     # Check password manager and create a hash if it is ok
     def hash_password(self, pw_from_manager: str) -> str:
-        print(pw_from_manager)
         if not isinstance(pw_from_manager, str):
             raise ValueError("Password is not a string")
         if not len(pw_from_manager) == 16:
