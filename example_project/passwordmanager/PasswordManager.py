@@ -4,14 +4,14 @@ import hashlib
 # Generate passwords out of a master-password, a login- and a service-name
 class PasswordManager():
 
-    def __init__(self, master_password: str, password_length: int = 16):
-        if not isinstance(master_password, str) or not isinstance(password_length, int):
+    def __init__(self, master_password: str):
+        if not isinstance(master_password, str):
             raise TypeError("The passed parameters have the wrong type.")
-        elif len(master_password) <= 0 or password_length < 16:
-            raise ValueError("Master Password or Password length are too short")
+        elif len(master_password) <= 0:
+            raise ValueError("Master Password are too short")
         master_password = master_password.strip()
         self.__master_password = master_password
-        self.__password_length = password_length
+        self.__password_length = 16
 
     def get_password_length(self):
         return self.__password_length
