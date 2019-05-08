@@ -23,5 +23,6 @@ jobs:
 workflows:
   version: 2.1
   latex_document_and_python_tests:
-    jobs: # - latex_document_build
+    jobs:
+      - latex_document_build
       - run_python_tests
