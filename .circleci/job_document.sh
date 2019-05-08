@@ -13,4 +13,4 @@ echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 echo "|    Copy generated file to build artifacts    |"
 echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 mkdir /tmp/artifacts 
-cp -R documentation_pdf/*.pdf /tmp/artifacts/
+cp -R documentation_output/*.pdf /tmp/artifacts/

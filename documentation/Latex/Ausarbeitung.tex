@@ -55,7 +55,7 @@ Ein weiteres Konzept von Circle CI zu Vereinfachung der Konfiguration sind sogen
 	\centering
   	\includegraphics[width=1\linewidth]{../Images/Projekt_aktivieren}
   	\caption{Aktivierung eines Projektes in der Weboberfläche}
-  	\label{fig:project-structure}
+  	\label{fig:aktivieren}
 \end{figure}
 
 \subsection{Funktionsweise von Circle CI}
@@ -72,21 +72,21 @@ CircleCI bietet im Fall eines auftretenden Fehlers die Möglichkeit zum Debuggen
 	\centering
   	\includegraphics[width=0.25\linewidth]{../Images/SSH_Button}
   	\caption{Starten eines Jobs mit SSH Support}
-  	\label{fig:project-structure}
+  	\label{fig:ssh-button}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
   	\includegraphics[width=1\linewidth]{../Images/SSH_Output}
   	\caption{Verbindungsdetails auf der Weboberfläche}
-  	\label{fig:project-structure}
+  	\label{fig:ssh-output}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
   	\includegraphics[width=0.7\linewidth]{../Images/Interact}
   	\caption{Aktive SSH Verbindung mit dem Circle CI Docker Container}
-  	\label{fig:project-structure}
+  	\label{fig:interact}
 \end{figure}
 
 \subsection{Verbesserungen der Performance}
@@ -109,7 +109,7 @@ Circle CI bietet ein Command Line Interface an, das es erlaubt, bestimmte lokale
 	\centering
   	\includegraphics[width=0.7\linewidth]{../Images/CLI}
   	\caption{Command Line Interface}
-  	\label{fig:project-structure}
+  	\label{fig:cli}
 \end{figure}
 
 \subsection{Weboberfläche}
@@ -119,14 +119,14 @@ Die erste Anlaufstelle für Circle CI ist die Weboberfläche, die dem Nutzer vie
 	\centering
   	\includegraphics[width=1\linewidth]{../Images/Weboberflaeche}
   	\caption{Weboberfläche mit der Übersicht über die letzten Jobs}
-  	\label{fig:project-structure}
+  	\label{fig:weboberflaeche}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
   	\includegraphics[width=1\linewidth]{../Images/Test_Logs}
   	\caption{Logs der Tests in der Weboberfläche}
-  	\label{fig:project-structure}
+  	\label{fig:testlogs}
 \end{figure}
 
 Neben dieser Funktionen können über die Weboberfläche auch neue Repositories in Circle CI aufgenommen werden oder bereits aufgenommene wieder entfernt werden, falls diese nicht mehr kontinuierlich integriert werden sollen.
@@ -171,7 +171,7 @@ In diesem Abschnitt möchten wir etwas genauer auf den Inhalt der Konfigurations
 	\centering
   	\includegraphics[width=1\linewidth]{../Images/Config/Version}
   	\caption{Definition der in Circle CI zu verwendenden Version}
-  	\label{fig:project-structure}
+  	\label{fig:version}
 \end{figure}
 
 Das nächste Feld listet die Jobs auf, die Circle CI ausführen sollen. Beide werden später bei der Angabe der Reihenfolge bei der Ausführung über ihre Namen referenziert. Die Definition eines Jobs besteht mindestens aus zwei Teilen: der Angabe der Umgebung, in der der Job ausgeführt werden soll und die einzelnen Schritte in Form von Shell Befehlen. In beiden Fällen entscheiden wir uns für die Verwendung eines Docker Containers, der alle wichtigen Abhängigkeiten wie eine Python Installation oder eine Latex Distribution für das Übersetzen unseres Dokument mitbringt. Alternativ könnten wir hier auch Virtuelle Maschinen auf Linux oder macOS Basis verwenden, wenn wir diese für unseren Job benötigen würden.
@@ -181,14 +181,14 @@ Darauf folgt die Liste der Shell Befehle, die Circle CI sequentiell anstößt. I
 	\centering
   	\includegraphics[width=1\linewidth]{../Images/Config/Python}
   	\caption{Shell Script mit den Befehlen zum Ausführen der Python Tests}
-  	\label{fig:project-structure}
+  	\label{fig:python}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
   	\includegraphics[width=1\linewidth]{../Images/Config/Latex}
   	\caption{Shell Script mit den Befehl zum Bauen und Speichern des Latex Dokuments}
-  	\label{fig:project-structure}
+  	\label{fig:latex}
 \end{figure}
 
 In der Konfigurationsdatei wird dieses Script dann aufgerufen. Alternativ könnten die einzelnen Befehle auch direkt in der Konfigurationsdatei in Form einzelner Steps definiert und benannt werden. Diese Variante ist zwar etwas aufwändiger zu schreiben, führt aber später bei der Auswertung zu einer klareren Trennung der einzelnen Arbeitsschritte.
@@ -198,7 +198,7 @@ Eine Besonderheit im Latex Job ist das Speichern von Build Artefakten, um diese 
 	\centering
   	\includegraphics[width=1\linewidth]{../Images/Config/Jobs}
   	\caption{Definition der Jobs latex\_document\_build und run\_python\_tests}
-  	\label{fig:project-structure}
+  	\label{fig:jobs}
 \end{figure}
 
 Nachdem wir unsere beiden Jobs definiert haben, definieren wir den Workflow in dem die Reihenfolge festgelegt wird, in der die einzelnen Jobs ausgeführt werden. In unserem Fall sind beide Jobs unabhängig von einander und müssen nicht in einer bestimmten Reihenfolge sequentiell ausgeführt werden. Daher verweisen wir unter jobs auf beide Jobs ohne weitere Angaben. Die beiden Jobs werden somit parallel unabhängig von einander ausgeführt. Wären sie abhängig von einander, könnten wir über ein zusätzliches Feld require in der Definition des Workflows auf einen anderen Job verweisen, der beendet sein muss, bevor der aktuelle Job anfängt. So kann beispielsweise der Deployment Job auf die Ergebnisse des Build Jobs warten.
@@ -207,7 +207,7 @@ Nachdem wir unsere beiden Jobs definiert haben, definieren wir den Workflow in d
 	\centering
   	\includegraphics[width=1\linewidth]{../Images/Config/Workflow}
   	\caption{Definition des Workflows basierend auf den einzelnen Jobs}
-  	\label{fig:project-structure}
+  	\label{fig:workflow}
 \end{figure}
 
 \section{Abschließende Zusammenfassung}
