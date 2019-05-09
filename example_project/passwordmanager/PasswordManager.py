@@ -11,7 +11,7 @@ class PasswordManager():
             raise ValueError("Master Password are too short")
         master_password = master_password.strip()
         self.__master_password = master_password
-        self.__password_length = 16
+        self.__password_length = 18
 
     def get_password_length(self):
         return self.__password_length
